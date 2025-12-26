@@ -1,12 +1,14 @@
-{
-    "build": {
-        "builder": "DOCKERFILE",
-        "dockerfilePath": "./Dockerfile",
-        "watchPatterns": [
-            "requirements.txt",
-            "src/**",
-            "railway.toml",
-            "Dockerfile"
-        ]
-    }
-}
+[build]
+# Define the builder type
+builder = "DOCKERFILE"
+
+# Specify the path to the Dockerfile
+dockerfilePath = "./Dockerfile"
+
+# Define the watch patterns
+watchPatterns = [
+    "requirements.txt",
+    "src/**",
+    "railway.toml",
+    "Dockerfile"
+]
