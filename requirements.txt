@@ -1,5 +1,5 @@
 Django>=5.0,<5.1
-gunicorn>=20.1.0
+gunicorn
 python-decouple>=3.8
 psycopg[binary]>=2.9.3
 dj-database-url>=1.2.0
