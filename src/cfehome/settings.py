@@ -1,13 +1,13 @@
 import os
-from decouple import config
 from pathlib import Path
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings
-SECRET_KEY = config('DJANGO_SECRET_KEY')
+from decouple import config
 
+SECRET_KEY = config('DJANGO_SECRET_KEY')
 DEBUG = config('DJANGO_DEBUG', cast=bool)
 print("DEBUG =", DEBUG)
 print(config('DJANGO_SECRET_KEY'))
