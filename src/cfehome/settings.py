@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import os
 from decouple import config
 from pathlib import Path
 from decouple import config
@@ -25,9 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = str(os.environ.get("DJANGO_DEBUG")).lower() == "true"
+DEBUG = str(os.environ.get("DJANGO_DEBUG")).lower() == "true"
 DEBUG = config('DJANGO_DEBUG')
 print("DEBUG =", DEBUG)
+print(config('DJANGO_SECRET_KEY'))
 
 
 ALLOWED_HOSTS = [
