@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'commando',
     'visits',
 ]
 
@@ -93,6 +94,8 @@ STATIC_URL = 'static/'
 STATICFILES_BASE_DIR = BASE_DIR / 'staticfiles'
 
 # FIXED: Ensure the directory exists to avoid the (staticfiles.W004) warning
+
+STATICFILES_BASE_DIR.mkdir(parents=True, exist_ok=True)
 STATICFILES_DIRS = [
     STATICFILES_BASE_DIR
 ]
@@ -108,6 +111,9 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+# Added STATICFILES_VENDOR_DIR for vendor files
+STATICFILES_VENDOR_DIR = BASE_DIR / 'staticfiles/vendors'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
