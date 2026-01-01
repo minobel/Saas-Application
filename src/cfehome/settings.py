@@ -116,4 +116,6 @@ STORAGES = {
 STATICFILES_VENDOR_DIR = BASE_DIR / 'staticfiles/vendors'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# settings.py
+WHITENOISE_MANIFEST_STRICT = False
 
