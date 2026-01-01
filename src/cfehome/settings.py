@@ -94,7 +94,7 @@ STATICFILES_BASE_DIR = BASE_DIR / 'staticfiles'
 
 # FIXED: Ensure the directory exists to avoid the (staticfiles.W004) warning
 STATICFILES_DIRS = [
-    STATICFILES_BASE_DIR
+    STATICFILES_BASE_DIR,
 ]
 
 # FIXED: Standardized names for local and production CDNs
