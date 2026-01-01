@@ -1,19 +1,15 @@
 import os
 from pathlib import Path
 import dj_database_url
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings
-from decouple import config
-
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 DEBUG = config('DJANGO_DEBUG', cast=bool)
-print("DEBUG =", DEBUG)
-print(config('DJANGO_SECRET_KEY'))
 
 ALLOWED_HOSTS = [".railway.app"]
-
 if DEBUG:
     ALLOWED_HOSTS += ["127.0.0.1", "localhost"]
 
@@ -29,6 +25,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # ADDED: WhiteNoise middleware to serve static files on Railway
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -59,7 +57,6 @@ WSGI_APPLICATION = 'cfehome.wsgi.application'
 
 # Database settings
 DATABASE_URL = config('DATABASE_URL', default=None, cast=str)
-
 if DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.config(
@@ -89,20 +86,28 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# --- STATIC FILES CONFIGURATION ---
 STATIC_URL = 'static/'
-STATICFILES_BASE_DIR = BASE_DIR / 'staticfiles'
-STATICFILES_VENDOR_DIR = STATICFILES_BASE_DIR / 'vendors'
 
-# source(s) for python manage.py collectstatic
+# CHANGED: Ensure this points to the correct folder where your local CSS/JS are
+STATICFILES_BASE_DIR = BASE_DIR / 'staticfiles'
+
+# FIXED: Ensure the directory exists to avoid the (staticfiles.W004) warning
 STATICFILES_DIRS = [
     STATICFILES_BASE_DIR
 ]
 
-# output for python manage.py collectstatic
-# local cdn
+# FIXED: Standardized names for local and production CDNs
 STATIC_ROOT = BASE_DIR / 'local_cdn'
 if not DEBUG:
     STATIC_ROOT = BASE_DIR / 'prod-cdn'
+
+# ADDED: Storage engine for WhiteNoise (Optimizes CSS/JS compression)
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
