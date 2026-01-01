@@ -1,13 +1,18 @@
 {% extends "base.html" %}
 
-<title>{% block head_title %}{{ page_title }} - {{ block.super}}{% endblock head_title %}</title>
+{% block head_title %}{{ page_title }} - {{ block.super }}{% endblock head_title %}
 
 {% block content %}
+<div class="max-w-screen-xl mx-auto p-4 mt-4">
+    <h1 class="text-xl font-bold text-gray-900">{{ page_title }}</h1>
+    <p class="text-gray-700">Hello again!</p>
 
-<h1> {{ page_title }}</h1>
-<p> Hello Again!</p>
+    {% include "snippets/welcome-user-msg.html" %}
 
-{% include "snippets/welcome-user-msg.html" %}
-
-Page visits = {{page_visit_count}}
+    <div class="mt-2 space-y-1">
+        <p class="text-gray-900">Page visits: {{ page_visit_count }}</p>
+        <p class="text-gray-900">percent: {{ percent }}</p>
+        <p class="text-gray-900">Total visits: {{ total_visits }}</p>
+    </div>
+</div>
 {% endblock content %}

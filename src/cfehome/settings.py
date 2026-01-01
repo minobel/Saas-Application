@@ -89,8 +89,20 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_BASE_DIR = BASE_DIR / 'staticfiles'
+STATICFILES_VENDOR_DIR = STATICFILES_BASE_DIR / 'vendors'
 
+# source(s) for python manage.py collectstatic
+STATICFILES_DIRS = [
+    STATICFILES_BASE_DIR
+]
+
+# output for python manage.py collectstatic
+# local cdn
+STATIC_ROOT = BASE_DIR / 'local_cdn'
+if not DEBUG:
+    STATIC_ROOT = BASE_DIR / 'prod-cdn'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
