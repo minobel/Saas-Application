@@ -57,7 +57,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'cfehome.wsgi.application'
 
 # Database settings
-DATABASE_URL = config('DATABASE_URL', default=None, cast=str)
+DATABASE_URL = config('DATABASE_URL', default=None)
 if DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.config(
