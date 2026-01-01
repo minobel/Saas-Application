@@ -3,16 +3,19 @@ from pathlib import Path
 import dj_database_url
 from decouple import config
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings
+# Quick-start development settings - unsuitable for production
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 DEBUG = config('DJANGO_DEBUG', cast=bool)
 
+# Define allowed hosts for production and development
 ALLOWED_HOSTS = [".railway.app"]
 if DEBUG:
     ALLOWED_HOSTS += ["127.0.0.1", "localhost"]
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -26,7 +29,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # ADDED: WhiteNoise middleware to serve static files on Railway
+    # WhiteNoise middleware to serve static files in production
     'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,7 +59,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cfehome.wsgi.application'
 
-# Database settings
+# Database configuration for Railway (PostgreSQL) and Local (SQLite)
 DATABASE_URL = config('DATABASE_URL', default=None)
 if DATABASE_URL:
     DATABASES = {
@@ -82,6 +85,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
@@ -90,32 +94,32 @@ USE_TZ = True
 # --- STATIC FILES CONFIGURATION ---
 STATIC_URL = 'static/'
 
-# CHANGED: Ensure this points to the correct folder where your local CSS/JS are
+# Local directory where your custom static files are stored
 STATICFILES_BASE_DIR = BASE_DIR / 'staticfiles'
-
-# FIXED: Ensure the directory exists to avoid the (staticfiles.W004) warning
-
 STATICFILES_BASE_DIR.mkdir(parents=True, exist_ok=True)
+
 STATICFILES_DIRS = [
     STATICFILES_BASE_DIR
 ]
 
-# FIXED: Standardized names for local and production CDNs
+# Destination directory for collectstatic
 STATIC_ROOT = BASE_DIR / 'local_cdn'
 if not DEBUG:
     STATIC_ROOT = BASE_DIR / 'prod-cdn'
 
-# ADDED: Storage engine for WhiteNoise (Optimizes CSS/JS compression)
+# WhiteNoise Storage Backend
+# Using CompressedStaticFilesStorage to ignore missing .map files and prevent build errors
 STORAGES = {
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
-# Added STATICFILES_VENDOR_DIR for vendor files
+# Directory for external vendor files (like Flowbite)
 STATICFILES_VENDOR_DIR = BASE_DIR / 'staticfiles/vendors'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# settings.py
+
+# Disable strict manifest to ignore missing source maps (like flowbite.min.js.map)
 WHITENOISE_MANIFEST_STRICT = False
 
