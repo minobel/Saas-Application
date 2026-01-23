@@ -6,3 +6,7 @@ dj-database-url>=1.2.0
 python-dotenv>=1.0.0
 whitenoise>=6.4.0
 requests>=2.28.0
+django-allauth[socialaccount]
+django-allauth-ui
+django-widget-tweaks
+stripe
