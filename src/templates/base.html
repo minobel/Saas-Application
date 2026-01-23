@@ -1,19 +1,14 @@
-]<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block head_title %}SAAS{% endblock head_title %}</title>
-    {% include "base/css.html" %}
+    <title>{% block head_title %}SaaS{% endblock head_title %}</title>
+    {% include 'base/css.html' %}
 </head>
-<body class="bg-white">
-    {% include "nav/navbar.html" %}
-
-    <main>
-        {% block content %}
-        {% endblock content %}
-    </main>
-
-    {% include "base/js.html" %}
+<body class="pt-20">
+    {% include 'nav/navbar.html' %}
+    {% include 'base/messages.html' with messages=messages %}
+    {% block content %}
+    {% endblock content %}
+    {% include 'base/js.html' %}
 </body>
 </html>
