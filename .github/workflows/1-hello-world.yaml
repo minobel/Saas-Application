@@ -2,15 +2,19 @@ name: 1 - Hello World GitHub actions
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '30 15 * * *'
-  push: # git push
+  push:
     branches:
-        - main
+      - main
 
 jobs:
   hello:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Hello there
-        run: echo "hello"
+        run: echo "Hello! Runner-e ekhon amar code access ache."
+
+      - name: Show files
+        run: ls -R
