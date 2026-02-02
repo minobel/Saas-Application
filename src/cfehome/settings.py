@@ -14,6 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ----------------------
 # Secret & Debug
 # ----------------------
+BASE_URL = config('BASE_URL', default=None)
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 DEBUG = config('DJANGO_DEBUG', cast=bool, default=True)
 ALLOWED_HOSTS = [".railway.app"]
@@ -70,6 +71,7 @@ INSTALLED_APPS = [
     'profiles',
     'subscriptions',
     'customers',
+    'checkouts',
 ]
 
 # ----------------------
@@ -148,6 +150,7 @@ LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGIN_METHODS = {"username", "email"}
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "[CFE Home] "
+ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 
 AUTHENTICATION_BACKENDS = [
