@@ -10,8 +10,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      DJANGO_DEBUG: 0
+      DJANGO_DEBUG: 1
       # DJANGO_SECRET_KEY: not-good
+      STRIPE_SECRET_KEY: "dummy_key_for_settings"
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
