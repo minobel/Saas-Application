@@ -6,7 +6,7 @@ import psycopg
 
 from decouple import config
 
-STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
+STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY", default="")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
