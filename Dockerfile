@@ -1,11 +1,9 @@
-# Set the python version as a build-time argument
+# Set the python version
 ARG PYTHON_VERSION=3.12-slim-bullseye
 FROM python:${PYTHON_VERSION}
 
 # Create a virtual environment
 RUN python -m venv /opt/venv
-
-# Set the virtual environment as the current location
 ENV PATH=/opt/venv/bin:$PATH
 
 # Upgrade pip
@@ -13,7 +11,7 @@ RUN pip install --upgrade pip
 
 # Set Python-related environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHON_BUFFERED 1
+ENV PYTHONUNBUFFERED 1
 
 # Install os dependencies
 RUN apt-get update && apt-get install -y \
@@ -23,8 +21,7 @@ RUN apt-get update && apt-get install -y \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Create and set the working directory
-RUN mkdir -p /code
+# Set the working directory
 WORKDIR /code
 
 # Copy the requirements file and install them
@@ -49,22 +46,24 @@ ARG PROJ_NAME="cfehome"
 RUN python manage.py vendor_pull
 RUN python manage.py collectstatic --noinput
 
-# --- Fix for the $PORT error starts here ---
-# create a bash script to run the Django project
-RUN echo '#!/bin/bash' > ./paracord_runner.sh && \
-    echo 'RUN_PORT=${PORT:-8080}' >> ./paracord_runner.sh && \
-    echo 'python manage.py migrate --no-input' >> ./paracord_runner.sh && \
-    echo "gunicorn ${PROJ_NAME}.wsgi:application --bind 0.0.0.0:\$RUN_PORT" >> ./paracord_runner.sh
+# --- CORRECTED SCRIPT CREATION ---
+# 'EOF' er pashe single quote dile variable gulo build-time e change hobe na
+RUN cat <<'EOF' > ./paracord_runner.sh
+#!/bin/bash
+RUN_PORT=${PORT:-8080}
+echo "Starting Gunicorn on port $RUN_PORT"
+python manage.py migrate --no-input
+gunicorn ${PROJ_NAME:-cfehome}.wsgi:application --bind 0.0.0.0:$RUN_PORT
+EOF
 
 # make the bash script executable
 RUN chmod +x paracord_runner.sh
-# --- Fix ends here ---
 
-# Clean up apt cache
+# Clean up apt cache to reduce image size
 RUN apt-get remove --purge -y \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Run the Django project via the runner script
+# Run the Django project
 CMD ["./paracord_runner.sh"]
