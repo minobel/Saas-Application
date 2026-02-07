@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 import dj_database_url
@@ -12,18 +11,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # --------------------------------------------------
 # Core settings
 # --------------------------------------------------
-SECRET_KEY = config(
-    "DJANGO_SECRET_KEY",
-    default="unsafe-dev-secret-key"
-)
+SECRET_KEY = config("DJANGO_SECRET_KEY", default="unsafe-dev-secret-key")
 
 DEBUG = config("DJANGO_DEBUG", cast=bool, default=True)
 
 BASE_URL = config("BASE_URL", default=None)
 
 ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS",
-    default=".railway.app,localhost,127.0.0.1"
+    "ALLOWED_HOSTS", default=".railway.app,localhost,127.0.0.1"
 ).split(",")
 
 # --------------------------------------------------
@@ -66,7 +61,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-
     # Third-party
     "allauth",
     "allauth.account",
@@ -75,7 +69,6 @@ INSTALLED_APPS = [
     "allauth_ui",
     "slippers",
     "widget_tweaks",
-
     # Local apps
     "commando",
     "visits",
@@ -123,7 +116,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "cfehome.wsgi.application"
 
-# ... (uporer settings thik ache)
 
 # --------------------------------------------------
 # Database (Safe configuration)
@@ -131,7 +123,9 @@ WSGI_APPLICATION = "cfehome.wsgi.application"
 DATABASE_URL = config("DATABASE_URL", default=None, cast=str)
 
 # Logic to handle Neon/Postgres and fallback to SQLite
-if DATABASE_URL and (DATABASE_URL.startswith("postgres://") or DATABASE_URL.startswith("postgresql://")):
+if DATABASE_URL and (
+    DATABASE_URL.startswith("postgres://") or DATABASE_URL.startswith("postgresql://")
+):
     DATABASES = {
         "default": dj_database_url.config(
             default=DATABASE_URL,
@@ -143,7 +137,7 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
+            "NAME": str(BASE_DIR / "db.sqlite3"),
         }
     }
 
@@ -152,7 +146,9 @@ else:
 # Password validation
 # --------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
@@ -205,9 +201,7 @@ STATICFILES_DIRS = [BASE_DIR / "staticfiles"]
 STATIC_ROOT = BASE_DIR / "static-cdn"
 
 STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"
-    }
+    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"}
 }
 
 WHITENOISE_MANIFEST_STRICT = False
@@ -216,7 +210,3 @@ WHITENOISE_MANIFEST_STRICT = False
 # Default PK
 # --------------------------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-
-
-

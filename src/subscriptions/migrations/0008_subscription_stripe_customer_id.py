@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('subscriptions', '0007_usersubscription'),
+        ("subscriptions", "0007_usersubscription"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='subscription',
-            name='stripe_customer_id',
+            model_name="subscription",
+            name="stripe_customer_id",
             field=models.CharField(blank=True, max_length=120, null=True),
         ),
     ]

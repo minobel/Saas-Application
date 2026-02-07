@@ -1,10 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
-#from django.contrib.auth.models import User
-from django.contrib.auth import get_user_model   
+from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
 
 # Create your views here.
 def login_view(request):
@@ -12,7 +12,6 @@ def login_view(request):
     if request.method == "POST":
         username = request.POST.get("username") or None
         password = request.POST.get("password") or None
-        user = authenticate(request, username=username, password=password)
         if all([username, password]):
             user = authenticate(request, username=username, password=password)
             if user is not None:
@@ -27,17 +26,21 @@ def login_view(request):
             messages.warning(request, "Please provide both username and password.")
     return render(request, "auth/login.html", {})
 
+
 def register_view(request):
     if request.method == "POST":
         print(request.POST)
         username = request.POST.get("username") or None
         email = request.POST.get("email") or None
         password = request.POST.get("password") or None
-        # user_exists = User.objects.filter(username__iexact=username).exists()
-        # email_exists = User.objects.filter(email__iexact=email).exists()
         try:
             User.objects.create_user(username, email=email, password=password)
-        except :
-            pass
-    template_name = "auth/register.html"  # Default template
+            messages.success(request, "Registration successful! You can now log in.")
+            return redirect("login")
+        except Exception:  # Ruff E722 error fixed
+            messages.error(
+                request, "An error occurred during registration. Please try again."
+            )
+
+    template_name = "auth/register.html"
     return render(request, template_name, {})

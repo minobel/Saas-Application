@@ -4,25 +4,28 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('subscriptions', '0010_subscriptionprice'),
+        ("subscriptions", "0010_subscriptionprice"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='subscriptionprice',
-            name='featured',
+            model_name="subscriptionprice",
+            name="featured",
             field=models.BooleanField(default=True),
         ),
         migrations.AddField(
-            model_name='subscriptionprice',
-            name='order',
+            model_name="subscriptionprice",
+            name="order",
             field=models.IntegerField(default=-1),
         ),
         migrations.AlterField(
-            model_name='subscriptionprice',
-            name='interval',
-            field=models.CharField(choices=[('month', 'Monthly'), ('year', 'Yearly')], default='month', max_length=50),
+            model_name="subscriptionprice",
+            name="interval",
+            field=models.CharField(
+                choices=[("month", "Monthly"), ("year", "Yearly")],
+                default="month",
+                max_length=50,
+            ),
         ),
     ]

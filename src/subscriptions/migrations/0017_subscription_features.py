@@ -4,15 +4,21 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('subscriptions', '0016_rename_stripe_customer_id_subscriptionprice_stripe_price_id_and_more'),
+        (
+            "subscriptions",
+            "0016_rename_stripe_customer_id_subscriptionprice_stripe_price_id_and_more",
+        ),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='subscription',
-            name='features',
-            field=models.TextField(blank=True, help_text='Featured for pricing, separate by line', null=True),
+            model_name="subscription",
+            name="features",
+            field=models.TextField(
+                blank=True,
+                help_text="Featured for pricing, separate by line",
+                null=True,
+            ),
         ),
     ]

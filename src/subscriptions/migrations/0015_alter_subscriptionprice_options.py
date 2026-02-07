@@ -4,14 +4,18 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('subscriptions', '0014_alter_subscription_options_subscription_featured_and_more'),
+        (
+            "subscriptions",
+            "0014_alter_subscription_options_subscription_featured_and_more",
+        ),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='subscriptionprice',
-            options={'ordering': ['subscription__order', 'order', 'featured', '-updated']},
+            name="subscriptionprice",
+            options={
+                "ordering": ["subscription__order", "order", "featured", "-updated"]
+            },
         ),
     ]

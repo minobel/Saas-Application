@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('subscriptions', '0005_alter_subscription_permissions'),
+        ("subscriptions", "0005_alter_subscription_permissions"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='subscription',
-            name='active',
+            model_name="subscription",
+            name="active",
             field=models.BooleanField(default=True),
         ),
     ]

@@ -5,31 +5,40 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('subscriptions', '0011_subscriptionprice_featured_subscriptionprice_order_and_more'),
+        (
+            "subscriptions",
+            "0011_subscriptionprice_featured_subscriptionprice_order_and_more",
+        ),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='subscriptionprice',
-            name='timestamp',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now),
+            model_name="subscriptionprice",
+            name="timestamp",
+            field=models.DateTimeField(
+                auto_now_add=True, default=django.utils.timezone.now
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='subscriptionprice',
-            name='updated',
+            model_name="subscriptionprice",
+            name="updated",
             field=models.DateTimeField(auto_now=True),
         ),
         migrations.AlterField(
-            model_name='subscriptionprice',
-            name='featured',
-            field=models.BooleanField(default=True, help_text='If selected, this plan will be marked as featured and only one plan per subscription can be featured per interval.'),
+            model_name="subscriptionprice",
+            name="featured",
+            field=models.BooleanField(
+                default=True,
+                help_text="If selected, this plan will be marked as featured and only one plan per subscription can be featured per interval.",
+            ),
         ),
         migrations.AlterField(
-            model_name='subscriptionprice',
-            name='order',
-            field=models.IntegerField(default=-1, help_text='Ordering on Django Pricing Page'),
+            model_name="subscriptionprice",
+            name="order",
+            field=models.IntegerField(
+                default=-1, help_text="Ordering on Django Pricing Page"
+            ),
         ),
     ]

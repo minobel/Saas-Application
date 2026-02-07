@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 
 # Create your views here.
@@ -13,10 +12,10 @@ def profile_list_view(request):
     return render(request, "profiles/list.html", context)
 
 
-#@login_required
+# @login_required
 def profile_detail_view(request, username=None, *args, **kwargs):
     user = request.user
-    user_groups = user.groups.all()
+    user.groups.all()
     print(
         user.has_perm("subscriptions.advanced"),
         user.has_perm("subscriptions.pro"),

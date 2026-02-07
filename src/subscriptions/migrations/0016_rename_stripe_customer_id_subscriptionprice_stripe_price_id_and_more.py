@@ -4,38 +4,37 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('subscriptions', '0015_alter_subscriptionprice_options'),
+        ("subscriptions", "0015_alter_subscriptionprice_options"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='subscriptionprice',
-            old_name='stripe_customer_id',
-            new_name='stripe_price_id',
+            model_name="subscriptionprice",
+            old_name="stripe_customer_id",
+            new_name="stripe_price_id",
         ),
         migrations.RemoveField(
-            model_name='subscription',
-            name='stripe_customer_id',
+            model_name="subscription",
+            name="stripe_customer_id",
         ),
         migrations.RemoveField(
-            model_name='subscriptionprice',
-            name='stripe_product_id',
+            model_name="subscriptionprice",
+            name="stripe_product_id",
         ),
         migrations.AlterField(
-            model_name='subscription',
-            name='featured',
+            model_name="subscription",
+            name="featured",
             field=models.BooleanField(default=True),
         ),
         migrations.AlterField(
-            model_name='subscriptionprice',
-            name='featured',
+            model_name="subscriptionprice",
+            name="featured",
             field=models.BooleanField(default=True),
         ),
         migrations.AlterField(
-            model_name='subscriptionprice',
-            name='order',
+            model_name="subscriptionprice",
+            name="order",
             field=models.IntegerField(default=-1),
         ),
     ]
