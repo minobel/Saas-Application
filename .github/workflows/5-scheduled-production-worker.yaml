@@ -36,8 +36,7 @@ jobs:
 
       - name: Get Database URL from Neon
         run: |
-          # Neon theke connection string ana hochhe
-          MY_NEON_CONN_STRING=$(neonctl connection-string --branch "${{ env.NEON_PROD_BRANCH }}" --project-id "${{ env.NEON_PROJECT_ID }}")
+          MY_NEON_CONN_STRING=$(neonctl connection-string --branch "${{ env.NEON_PROD_BRANCH }}" --project-id "${{ env.NEON_PROJECT_ID }}" --database-name "neondb")
           echo "DATABASE_URL=$MY_NEON_CONN_STRING" >> $GITHUB_ENV
 
       - name: Setup Django Secret Key
