@@ -123,12 +123,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "cfehome.wsgi.application"
 
-# --------------------------------------------------
-# Database (NO build-time DB connection!)
-# --------------------------------------------------
-DATABASE_URL = config("DATABASE_URL", default=None)
+# ... (uporer settings thik ache)
 
-if DATABASE_URL:
+# --------------------------------------------------
+# Database (Safe configuration)
+# --------------------------------------------------
+DATABASE_URL = config("DATABASE_URL", default=None, cast=str)
+
+# Logic to handle Neon/Postgres and fallback to SQLite
+if DATABASE_URL and (DATABASE_URL.startswith("postgres://") or DATABASE_URL.startswith("postgresql://")):
     DATABASES = {
         "default": dj_database_url.config(
             default=DATABASE_URL,
@@ -143,6 +146,7 @@ else:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+
 
 # --------------------------------------------------
 # Password validation

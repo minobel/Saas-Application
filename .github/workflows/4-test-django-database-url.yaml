@@ -30,6 +30,6 @@ jobs:
       - name: Django Tests
         working-directory: ./src
         env:
-          DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }} # Nishchit korlam variable-ta ekhaneu achhe
+          DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
         run: |
           python manage.py test
