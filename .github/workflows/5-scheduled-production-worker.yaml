@@ -53,6 +53,8 @@ jobs:
         working-directory: ./src
         env:
           DATABASE_URL: ${{ env.DATABASE_URL }}
+          STRIPE_TEST_OVERRIDE: "1" 
+          DJANGO_SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }}
         run: |
           python manage.py migrate
 
@@ -61,6 +63,7 @@ jobs:
         working-directory: ./src
         env:
           DATABASE_URL: ${{ env.DATABASE_URL }}
+          STRIPE_TEST_OVERRIDE: "1"
         run: |
           python manage.py sync_user_subs --day-start 0 --day-end 1
 
