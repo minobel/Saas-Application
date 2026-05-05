@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from subscriptions import views as subscriptions_views
+from landing import views as landing_views
 from checkouts import views as checkout_views
 from .views import (
     home_view,
@@ -11,6 +12,7 @@ from .views import (
 )
 
 urlpatterns = [
+    path("", landing_views.landing_dashboard_page_view, name='home'),
     path("", home_view, name="home"),
     # Checkout
     path(
